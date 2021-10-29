@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./checkForBuildChanges/",
+    "./skill/",
+    "./scripts/",
+    "./localLambda/",
+    "./__tests__/",
+    "./__fixtures__/",
+    "./__mocks__/",
+    "./integration-tests/",
+    "./babel.config.js",
+    "./jest.config.js",
+  ]
+}

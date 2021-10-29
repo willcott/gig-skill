@@ -1,0 +1,17 @@
+{
+  "languageModel": {
+    "invocationName": "giga brain",
+    "intents": [
+      {
+        "name": "NextGigIntent",
+        "samples": ["tell me about {MusicGroup} next gig", "where is {MusicGroup} next gig", "where is {MusicGroup} playing next"],
+        "slots": [
+          {
+            "name": "MusicGroup",
+            "type": "AMAZON.MusicGroup"
+          }
+        ]
+      }
+    ]
+  }
+}

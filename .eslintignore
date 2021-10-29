@@ -1,0 +1,10 @@
+coverage/
+node_modules/
+.nyc_output/
+reports/
+infrastructureCDK/
+postman/
+build/
+dist/
+docs/
+cdk.out/
