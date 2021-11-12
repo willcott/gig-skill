@@ -1,20 +1,20 @@
 import ordinal from 'ordinal';
-import { GigRepository } from '../repository/GigRepository';
+import { GigRepository } from '../repositories/GigRepository';
 import { DateService } from './DateService';
 
 export class GigService {
   private gigRepostitory: GigRepository;
+  private dateService: DateService;
 
-  constructor() {
-    this.gigRepostitory = new GigRepository();
+  constructor(gigRepostitory: GigRepository, dateService: DateService) {
+    this.gigRepostitory = gigRepostitory
+    this.dateService = dateService
   }
 
   async getGigMessageFor(artist: string): Promise<string> {
-    const gigDetails = await this.gigRepostitory.fetchLatestGigDetailsFor(artist);
+    const gigDetails = await this.gigRepostitory.fetchNextGigDetailsFor(artist);
 
-    const dateService = new DateService();
-
-    const formattedDate = dateService.format(gigDetails.eventDate);
+    const formattedDate = this.dateService.format(gigDetails.eventDate);
 
     return `${gigDetails.artistName} is playing at ${gigDetails.eventName} in ${gigDetails.eventLocation} on the ${formattedDate}`;
   }

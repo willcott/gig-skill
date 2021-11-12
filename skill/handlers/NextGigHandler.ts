@@ -1,17 +1,20 @@
-import { HandlerInput } from 'ask-sdk';
+import { getIntentName, getRequestType, HandlerInput } from 'ask-sdk';
 import { Response } from 'ask-sdk-model';
 import { GigService } from '../services/GigService';
 import { RequestHandler } from './RequestHandler';
 
 export class NextGigHandler implements RequestHandler {
-  canHandle(request: HandlerInput): boolean {
-    return true;
+  gigService: GigService
+
+  constructor(gigService: GigService) {
+    this.gigService = gigService
   }
-  async handle(request: HandlerInput): Promise<Response> {
-    const { responseBuilder, requestEnvelope } = request;
 
-    const gigService = new GigService();
-
+  canHandle({ requestEnvelope }: HandlerInput): boolean {
+    return getRequestType(requestEnvelope) === 'IntentRequest' &&
+      getIntentName(requestEnvelope) === 'NextGigIntent';
+  }
+  async handle({ responseBuilder, requestEnvelope }: HandlerInput): Promise<Response> {
     console.log(JSON.stringify(requestEnvelope.request));
 
     // @ts-ignore
@@ -22,7 +25,7 @@ export class NextGigHandler implements RequestHandler {
     // @ts-ignore
     const artist = requestEnvelope.request.intent.slots.MusicGroup.value;
 
-    const message = await gigService.getGigMessageFor(artist);
+    const message = await this.gigService.getGigMessageFor(artist);
 
     return responseBuilder.speak(message).getResponse();
   }

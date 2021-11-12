@@ -8,18 +8,18 @@ export interface GigDetails {
 }
 
 export class GigRepository {
-  async fetchLatestGigDetailsFor(artist: string): Promise<GigDetails> {
+  async fetchNextGigDetailsFor(artist: string): Promise<GigDetails> {
     const response = await axios.get(
       `https://rest.bandsintown.com/artists/${encodeURIComponent(artist)}/events?app_id=1`,
     );
 
-    const latestGig = response.data[0];
+    const nextGig = response.data[0];
 
     return {
-      artistName: latestGig.artist.name,
-      eventName: latestGig.venue.name,
-      eventLocation: latestGig.venue.location,
-      eventDate: latestGig.datetime,
+      artistName: nextGig.artist.name,
+      eventName: nextGig.venue.name,
+      eventLocation: nextGig.venue.location,
+      eventDate: nextGig.datetime,
     };
   }
 }
